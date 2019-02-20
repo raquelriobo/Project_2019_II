@@ -9,7 +9,7 @@ upot=0d0
 force=0d0
 press=0d0
 
-! **** Periodic boundary conditions **** !
+
 do i=1,N
   do j=1,N !Loop over all pairs
     if(i.ne.j)then
