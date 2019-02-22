@@ -10,7 +10,8 @@ do i=1,N
 end do
 
 ! ** Kinetic energy ** !
-kin=kinetic_en(vel,N)
+call subroutine kinetic_en(vel,N)
+!kin=kinetic_en(vel,N)
 
 ! ** Reescaling Kinetic energy ** !
 vel=vel*sqrt(N*3d0*Temp/(2d0*kin))
@@ -29,15 +30,3 @@ do i=1,N
   end do
 end do
 end subroutine in_velocity
-
-! ** Kinetic energy function ** !
-real*8 function kinetic_en(vel,N)
-implicit none
-real*8 :: kin,vel(N,3)
-integer :: i,N
-kinetic_en=0.0
-do i=1,N
-  kinetic_en=kinetic_en+0.5d0*(vel(i,1)**2d0+vel(i,2)**2d0+vel(i,3)**2d0)
-end do
-end function kinetic_en
-
