@@ -1,10 +1,8 @@
-subroutine coordenadas(N,coord,density,L)
+subroutine coordenadas(N,M,coord,density,L)
 implicit none
 integer :: N,M,i,j,k,cont
 real*8 :: a,L,r01(3),r02(3),r03(3),r04(3),vec(3),coord(N,3),density
 L=(N/density)**(1d0/3d0)  !Cell long
-!M=(N/4d0)**(1d0/3d0) !Number of times fcc is replicated in each dimension
-N=(Md3)*4
 a=L/M !Distance between particles in the cell
 
 ! ********** COORDENADAS FACE CENTERED CUBIC********** !
