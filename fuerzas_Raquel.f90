@@ -1,4 +1,3 @@
-
 ! ********** FORCE ********** !
 subroutine forces_LJ_Press(L,N,r,cut,upot,force,press)
 implicit none
