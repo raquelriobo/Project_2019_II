@@ -21,7 +21,7 @@ N=M**3.d0
 
 allocate(r(N,3),vel(N,3),force(N,3))
 
-call coordenadas_raquel(N,r,density,L)
+call coordenadas_raquel(M,N,r,density,L)
 
 !possible pbc
 
