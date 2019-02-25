@@ -10,7 +10,7 @@ do i=1,N
 end do
 
 ! ** Kinetic energy ** !
-call subroutine kinetic_en(vel,N)
+call kinetic_en(vel,N)
 !kin=kinetic_en(vel,N)
 
 ! ** Reescaling Kinetic energy ** !
