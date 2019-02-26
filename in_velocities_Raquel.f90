@@ -2,7 +2,7 @@
 subroutine in_velocity(vel,N,Temp)
 implicit none
 integer :: N,i,j
-real*8 :: Temp,kin,vel(N,3),suma(N),kinetic_en
+real*8 :: Temp,vel(N,3),suma(N),kin
 
 ! ** Random velocities ** !
 do i=1,N
@@ -10,8 +10,7 @@ do i=1,N
 end do
 
 ! ** Kinetic energy ** !
-call kinetic_en(vel,N)
-!kin=kinetic_en(vel,N)
+call kinetic_en(vel,N,kin)
 
 ! ** Reescaling Kinetic energy ** !
 vel=vel*sqrt(N*3d0*Temp/(2d0*kin))

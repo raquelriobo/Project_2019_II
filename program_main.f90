@@ -4,7 +4,7 @@
 program main
 implicit none
 integer :: M,N,Maxstep,i
-real*8 :: density,cut,L,dt,Temp,press
+real*8 :: upot,time,density,cut,L,dt,Temp,press,kin
 real*8 :: mass,eps,sigma
 real*8,allocatable :: r(:,:),vel(:,:),force(:,:)
 real*8 :: kb=1.3806d-23 !J/K
@@ -25,7 +25,7 @@ allocate(r(N,3),vel(N,3),force(N,3))
 
 !System initialization
 
-call coordenadas_raquel(M,N,r,density,L)
+call coordenadas(M,N,r,density,L)
 
 !Cut-off calculation
 
@@ -33,12 +33,12 @@ cut=L*0.3d0
 
 !(Possible pbc call)
 
-call in_velocities(vel,N,Temp)
+call in_velocity(vel,N,Temp)
 
 do i=1,MaxStep
   call verlet_velocity(N,cut,press,r,vel,dt,time,upot,kin)
   call boundary_conditions(r,N,L)
-  call units_print(time,upot,kin,press,MaxStep,Temp,L)
+!  call units_print(time,upot,kin,press,MaxStep,Temp,L)
 end do
 
 

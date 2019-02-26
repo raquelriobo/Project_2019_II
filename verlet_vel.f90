@@ -25,6 +25,7 @@
             REAL(8)             :: r(n_part,3), r_new(n_part,3) 
             REAL(8)             :: v(n_part,3), v_new(n_part,3)
             REAL(8)             :: F(n_part,3), F_new(n_part,3)
+            REAL(8)             :: L
             INTEGER             :: i
                 
 
