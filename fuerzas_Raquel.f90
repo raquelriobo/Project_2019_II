@@ -1,5 +1,5 @@
 ! ********** FORCE ********** !
-subroutine forces_LJ_Press(L,N,r,cut,upot,force,press)
+subroutine forces_LJ_Press(L,N,r,cut,force,press,upot)
 implicit none
 integer :: i,j,N
 real*8 :: L,r(N,3),upot,dx,dy,dz,d2,d6,d12,cut,force(N,3),d,press,fnew

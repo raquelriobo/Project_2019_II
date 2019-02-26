@@ -2,6 +2,7 @@ subroutine coordenadas(N,M,coord,density,L)
 implicit none
 integer :: N,M,i,j,k,cont
 real*8 :: a,L,r01(3),r02(3),r03(3),r04(3),vec(3),coord(N,3),density
+
 L=(N/density)**(1d0/3d0)  !Cell long
 a=L/M !Distance between particles in the cell
 

@@ -18,14 +18,15 @@ eps=91.04d0  !J/mol
 sigma=2.963d-10 !m
 Temp=(kb*300.0d0)/eps !Reduced units
 MaxStep=1000
-N=M**3.d0 !Number of particles
+N=M**3 !Number of particles
 
 
 allocate(r(N,3),vel(N,3),force(N,3))
 
+
 !System initialization
 
-call coordenadas(M,N,r,density,L)
+call coordenadas(N,M,r,density,L)
 
 !Cut-off calculation
 
@@ -36,10 +37,11 @@ cut=L*0.3d0
 call in_velocity(vel,N,Temp)
 
 do i=1,MaxStep
-  call verlet_velocity(N,cut,press,r,vel,dt,time,upot,kin)
-  call boundary_conditions(r,N,L)
-  call temperatura(kin,N,Temp)
-  call units_print(time,upot,kin,press,L,dt,sigma,eps,density)
+!  call verlet_velocity(N,cut,press,r,vel,dt,upot)
+!  call boundary_conditions(r,N,L)
+!  call kinetic_en(vel,N,kin)
+!  call temperatura(kin,N,Temp)
+!  call units_print(time,upot,kin,press,L,dt,sigma,eps,density)
 end do
 
 
