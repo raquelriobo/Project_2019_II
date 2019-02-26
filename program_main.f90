@@ -38,7 +38,8 @@ call in_velocity(vel,N,Temp)
 do i=1,MaxStep
   call verlet_velocity(N,cut,press,r,vel,dt,time,upot,kin)
   call boundary_conditions(r,N,L)
-!  call units_print(time,upot,kin,press,MaxStep,Temp,L)
+  call temperatura(kin,N,Temp)
+  call units_print(time,upot,kin,press,L,dt,sigma,eps,density)
 end do
 
 
