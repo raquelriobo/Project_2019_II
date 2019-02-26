@@ -18,15 +18,14 @@
 
 
 
-      SUBROUTINE VERLET_VELOCITY(n_part,cut_off,press,mass,r,v,dt,E_pot)
+      SUBROUTINE VERLET_VELOCITY(n_part,cut_off,press,r,v,dt,E_pot)
             IMPLICIT NONE
             INTEGER, INTENT(IN) :: n_part
             REAL(8), INTENT(IN) :: cut_off, dt
             REAL(8)             :: r(n_part,3), r_new(n_part,3) 
             REAL(8)             :: v(n_part,3), v_new(n_part,3)
             REAL(8)             :: F(n_part,3), F_new(n_part,3)
-            REAL(8)             :: L,press,mass
-            REAL(8)             :: E_pot
+            REAL(8)             :: L,press, E_Pot
             INTEGER             :: i
               
               
@@ -36,7 +35,7 @@
             ! posicions noves 
             do i=1,n_part
                r_new(i,:) = r(i,:) + v(i,:)*dt + &
-               F(i,:)/(2.*mass)*dt**2
+               0.5*F(i,:)*dt**2
             end do 
 
             ! forces noves 
@@ -45,7 +44,7 @@
             ! velocitats noves
             do i=1,n_part
                 v_new(i,:) = v(i,:) + &
-                (F(i,:)+F_new(i,:))/(2.*mass)*dt
+                0.5*(F(i,:)+F_new(i,:))*dt
             end do
                 
             ! reinicialització 
