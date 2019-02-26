@@ -18,7 +18,7 @@
 
 
 
-      SUBROUTINE VERLET_VELOCITY(n_part,cut_off,press,r,v,dt,E_pot)
+      SUBROUTINE VERLET_VELOCITY(n_part,cut_off,press,mass,r,v,dt,E_pot)
             IMPLICIT NONE
             INTEGER, INTENT(IN) :: n_part
             REAL(8), INTENT(IN) :: cut_off, dt
@@ -29,8 +29,6 @@
             REAL(8)             :: E_pot
             INTEGER             :: i
               
-            mass=1.d0  !Això s'ha d'arreglar!!!!!!!!!!!!! 
-
               
             ! posicions i forces inicials
             CALL forces_LJ_Press(L,n_part,r,cut_off,F,press,E_pot)
