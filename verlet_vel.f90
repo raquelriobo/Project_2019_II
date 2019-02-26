@@ -42,7 +42,7 @@
             end do 
 
             ! forces noves 
-            CALL forces_LJ_Press(L,n_part,r_new,cut_off,F_new,press)
+            CALL forces_LJ_Press(L,n_part,r_new,cut_off,F_new,press,E_pot)
 
             ! velocitats noves
             do i=1,n_part
