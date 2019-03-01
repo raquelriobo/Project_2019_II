@@ -28,6 +28,6 @@ do i=1,M
 end do
 
 ! ** Periodic Boundary Conditions
-coord=coord-nint(coord/L)*L !If particle is further than L/2
+!coord=coord-nint(coord/L)*L !If particle is further than L/2
 
 end subroutine coordenadas
