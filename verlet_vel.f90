@@ -25,12 +25,9 @@
             REAL(8)             :: r(n_part,3), r_new(n_part,3) 
             REAL(8)             :: v(n_part,3), v_new(n_part,3)
             REAL(8)             :: F(n_part,3), F_new(n_part,3)
-            REAL(8)             :: L,press,mass
-            REAL(8)             :: E_pot
+            REAL(8)             :: L,press, E_Pot
             INTEGER             :: i
               
-            mass=1.d0  !Això s'ha d'arreglar!!!!!!!!!!!!! 
-
               
             ! posicions i forces inicials
             CALL forces_LJ_Press(L,n_part,r,cut_off,F,press,E_pot)
@@ -38,7 +35,7 @@
             ! posicions noves 
             do i=1,n_part
                r_new(i,:) = r(i,:) + v(i,:)*dt + &
-               F(i,:)/(2.*mass)*dt**2
+               0.5*F(i,:)*dt**2
             end do 
 
             ! forces noves 
@@ -47,7 +44,7 @@
             ! velocitats noves
             do i=1,n_part
                 v_new(i,:) = v(i,:) + &
-                (F(i,:)+F_new(i,:))/(2.*mass)*dt
+                0.5*(F(i,:)+F_new(i,:))*dt
             end do
                 
             ! reinicialització 
