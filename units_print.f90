@@ -10,7 +10,7 @@ real*8, parameter :: kb=1.38064852d-23
 open(unit=24, file="Results.txt")
 
 
-!Falta cambio de unidades de tiempo y de temperatura!!!!!
+
 ekin=kinetic_E*epsil*1d-3
 epot=potential_E*epsil*1d-3
 pressu=pressure/2d0
