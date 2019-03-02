@@ -20,8 +20,8 @@ do i=1,N
       dz=dz-nint(dz/L)*L
       d2=dx*dx+dy*dy+dz*dz
       d=sqrt(d2) !Distance between particles using PBC
-      if(sqrt(d2).lt.cut)then
-	fnew=48d0/d**14d0-24d0/d**8d0 !Force actualization
+      if(d.lt.cut)then
+	fnew=(48d0/d**14d0-24d0/d**8d0) !Force actualization
 	force(i,1)=force(i,1)+fnew*dx
 	force(i,2)=force(i,2)+fnew*dy
 	force(i,3)=force(i,3)+fnew*dz

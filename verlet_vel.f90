@@ -18,7 +18,7 @@
 
 
 
-      SUBROUTINE VERLET_VELOCITY(n_part,cut_off,press,r,v,F,dt,E_pot)
+      SUBROUTINE VERLET_VELOCITY(n_part,cut_off,press,r,v,F,dt,E_pot,L)
             IMPLICIT NONE
             INTEGER, INTENT(IN) :: n_part
             REAL(8), INTENT(IN) :: cut_off, dt
@@ -50,5 +50,6 @@
             ! reinicialització 
             r = r_new ;    v = v_new ;    F = F_new ;
             r_new = 0.;    v_new = 0.;    F_new = 0.;
-                    
+                   
+	    call boundary_conditions(r,n_part,L) 
       END SUBROUTINE VERLET_VELOCITY

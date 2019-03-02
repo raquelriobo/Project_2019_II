@@ -16,8 +16,8 @@ epot=potential_E*epsil*1d-3
 pressu=pressure/2d0
 p=density*Temp*epsil*(sigma**(-3d0))*Avognum**(-1d0)+((1d0/(3d0*(L*sigma)**3d0))&
 &*epsil*Avognum**-(1d0))*pressu
-timee=time/(sigma*(sqrt(mass/epsil))
-Tempp=kb*Temp/epsil
+!timee=time/(sigma*(sqrt(mass/epsil)))!!!!!!!!Está mal
+Tempp=(Temp*epsil)/(kb*Avognum)
 write(24,*) time, epot, ekin, (epot+ekin), p, Tempp
 
 end subroutine units_print
