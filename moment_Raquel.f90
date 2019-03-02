@@ -1,9 +1,9 @@
 ! *** Total momentum *** !
-SUBROUTINE momentum(time,vel,N,p)
+SUBROUTINE momentum(time,vel,N)
 implicit none
 integer :: N,i
 real(8) :: time,vel(N,3),p(3)
-open(15,file="v_verlet_momnt.txt")
+open(70,file="v_verlet_momnt.txt")
 p=0d0
 
 do i=1,N ! * Loop over particles
@@ -12,7 +12,7 @@ do i=1,N ! * Loop over particles
 	p(3)=p(3)+vel(i,3) ! * pz
 end do
 
-WRITE(15,*) time,p(1),p(2),p(3)
+WRITE(70,*) time,p(1),p(2),p(3)
 
 END SUBROUTINE momentum
 
