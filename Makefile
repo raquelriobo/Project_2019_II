@@ -7,8 +7,15 @@ F90=gfortran
 #Programa principal
 TARGET=program_main
 
+#Generación de plots
+results.png: Results.txt
+	gnuplot plot_Energy_Raquel.gnu
 
-#Compilación del programa completo 1
+#Ejecución del programa
+Results.txt : $(TARGET).x 
+	./$(TARGET).x
+
+#Compilación del programa completo
 $(TARGET).x : $(TARGET).o Ekinetic_Raquel.o boundary.o verlet_vel.o fuerzas_Raquel.o in_velocities_Raquel.o coordenadas_Raquel.o units_print.o temperatura.o trajectory.o velocity_verlet.o
 
 	$(F90) -o $(TARGET).x $(TARGET).o Ekinetic_Raquel.o boundary.o verlet_vel.o fuerzas_Raquel.o in_velocities_Raquel.o coordenadas_Raquel.o units_print.o temperatura.o trajectory.o velocity_verlet.o

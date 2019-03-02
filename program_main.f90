@@ -14,12 +14,12 @@ M=3
 density=0.9d0 !Reduced
 dt=0.0003d0 !Reduced
 mass=4.0d0 !g/mol 
-!eps=91.04d0  !J/mol
-eps=0.998d3
-!sigma=2.963d-10 !m
-sigma=3.4d-10
-!Temp=(kb*300.0d0*6.022d23)/eps !Reduced units
-Temp=10
+eps=91.04d0  !J/mol
+!eps=0.998d3
+sigma=2.963d-10 !m
+!sigma=3.4d-10
+Temp=(kb*300.0d0*6.022d23)/eps !Reduced units
+!Temp=10
 Maxtime=10
 N=M**(3)*4 !Number of particles
 
@@ -30,20 +30,18 @@ allocate(r(N,3),vel(N,3),force(N,3))
 
 call coordenadas(N,M,r,density,L)
 call boundary_conditions(r,N,L)
-!Cut-off calculation
+call trajectory(r,N,time)
+call in_velocity(vel,N,Temp)
 
+!Cut-off calculation
 cut=L*0.3d0
 time=0.d0
 
-
-call trajectory(r,N,time)
-
-call in_velocity(vel,N,Temp)
-
+!Initial forces,energies,pressure
 call forces_LJ_Press(L,N,r,cut,force,press,upot)
 call units_print(time,upot,kin,press,L,dt,sigma,eps,density,Temp,mass)
 
-
+!Main Molecular Dynamics loop
 do while (time.lt.Maxtime)
   time=time+dt
   call verlet_velocity(N,cut,press,r,vel,force,dt,upot,L)
