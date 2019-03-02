@@ -1,0 +1,15 @@
+#Graphics DM
+.PHONY:plots
+plots : plot_Energy_Raquel.gnu
+
+.PHONY:txt
+txt:Results.txt
+
+plotEner_PF1.gnu: Results.txt
+	gnuplot plot_Energy_Raquel.gnu
+#plot_Moment_Raquel.gnu: v_verlet_momnt.txt
+#	gnuplot plot_Moment_Raquel.gnu
+
+.PHONY: clean
+clean :
+	rm *.o
