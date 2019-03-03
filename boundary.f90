@@ -1,10 +1,9 @@
-    SUBROUTINE BOUNDARY_CONDITIONS(r,n_part,L)
-        IMPLICIT NONE
-	INTEGER :: i 
-        INTEGER, INTENT(IN) :: n_part
-        REAL(8), INTENT(IN)  :: L
-        REAL(8)              :: r(n_part,3)
-        
+    subroutine boundary_conditions(r, n_part, L)
+        implicit none
+        integer :: i
+	integer, intent(in) :: n_part 
+        real(8), intent(in) :: L
+        real(8)             :: r(n_part,3)
+                
         r =  r-nint(r/L)*L
-    END SUBROUTINE BOUNDARY_CONDITIONS
-
+    end subroutine boundary_conditions
