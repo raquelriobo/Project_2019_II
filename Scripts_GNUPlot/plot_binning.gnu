@@ -11,7 +11,7 @@ set ytics font ',11'
 
 #set xrange [0:2200]
 #set yrange [0:0.52]  #Density 0.9
-set yrange [0:1.42]
+#set yrange [0:1.42]
 
 set xlabel 'm' font ',18'
 set ylabel 's' font ',18'
