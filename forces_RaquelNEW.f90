@@ -1,11 +1,12 @@
 ! ********** FORCE ********** !
-subroutine forces_LJ(L,N,r,cut,upot,force)
+subroutine forces_LJ(L,N,r,cut,force,press,upot)
 implicit none
 integer :: i,j,N
-real*8 :: L,r(N,3),upot,dx,dy,dz,d2,cut,force(N,3),d, d2i,d6i,ff
+real*8 :: L,r(N,3),upot,dx,dy,dz,d2,cut,force(N,3),d, d2i,d6i,ff,press
 
 upot=0d0
 force=0d0
+press=0d0
 
 ! **** Periodic boundary conditions **** !
 do i=1,N-1
@@ -30,7 +31,8 @@ do i=1,N-1
         force(j,1)=force(j,1)-ff*dx
         force(j,2)=force(j,2)-ff*dy
         force(j,3)=force(j,3)-ff*dz
-	
+
+	press=press+ff*dx*dx+ff*dy*dy+ff*dz*dz
         !upot=upot+4d0*(1d0/d**12d0-1d0/d**6d0)
         upot=upot+4d0*d6i*(d6i-1)
 !      end if

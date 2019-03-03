@@ -29,7 +29,7 @@
             d=delg*(i+0.5)
             vb=((i+1)**3.0d0-i**3.0d0)*delg**3.0d0
             nid=(4.0d0/3.0d0)*pi*vb*rho
-            g(i)=g(i)/(ngr*npart*nid)
+            g(i)=g(i)/(float(ngr)*npart*nid)
             write(90,*) d,g(i)
          end do
       end if

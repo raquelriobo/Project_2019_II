@@ -4,7 +4,7 @@ implicit none
 real(8) :: r(N,3),r_old(N,3),dx,dy,dz,d2,L,r0(N,3),dr(N,3),rp(N,3),mean
 real(8) :: sigma,eps,mass,time
 integer :: N,i,j
-open(18,file='v_verlet_2_msd.txt')
+open(91,file='v_verlet_2_msd.txt')
 !r0 reference configuration
 !r_old positions at t-dt
 !r positions at t
@@ -23,5 +23,5 @@ do i=1,N
   mean=mean+d2
 end do
 mean=mean/N
-write(18,*) time*sqrt(mass/eps)*sigma*1d12,mean*(sigma*1d10)**2d0
+write(91,*) time*sqrt(mass/eps)*sigma*1d12,mean*(sigma*1d10)**2d0
 ENDSUBROUTINE msd
