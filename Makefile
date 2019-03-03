@@ -4,14 +4,17 @@
 #Compilador
 F90=gfortran
 
-#Programa principal
+#Main program
 TARGET=program_main
 
+#Move the results to a new folder
+
+
 #Energy, pressure, temperature and total momentum plot generation
-results.png: Results.txt
+energy.eps: Results.txt
 	@echo "Generating plots with the results..."
 	gnuplot Scripts_GNUPlot/plot_Energy_Raquel.gnu
-	gnuplot Scripts_GNUPLot/plot_Moment_Raquel.gnu
+	gnuplot Scripts_GNUPlot/plot_rdf.gnu
 	@echo "Done."
 
 #Main program execution
@@ -31,11 +34,17 @@ $(TARGET).x : $(TARGET).o Ekinetic_Raquel.o boundary.o verlet_vel.o fuerzas_Raqu
 	$(F90) -c $<
 
 
+##statistics : binning of the time series for different magnitudes
+.PHONY : statistics
+statistics :
+	$(F90) -o binning.x binning.f90
+	./binning.x
+	gnuplot Scripts_GNUPlot/plot_binning.gnu
+
 ##help: instructions about the use of this Makefile
 .PHONY : help
 help :
 	@sed -n 's/^##//p' Makefile
-
 
 
 ##backup : make a compressed copy of the base code
