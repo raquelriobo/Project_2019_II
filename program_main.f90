@@ -7,29 +7,10 @@ integer :: M,N,i,nhis,ngr,counter
 real*8 :: upot,time,density,cut,L,dt,Temp,press,kin,delg
 real*8 :: mass,eps,sigma,Maxtime
 real*8,allocatable :: r(:,:),vel(:,:),force(:,:),g(:)
-real*8 :: kb=1.3806d-23 !J/K
 
-!Parameters
-M=3
-density=0.9d0 !Reduced
-!density=6.367d-4
+call input(M,dt,mass,density,Temp,sigma,eps,nhis,Maxtime) 
 
-dt=0.0003d0 !Reduced
-
-!mass=4.0d0 !g/mol
-mass=40
-
-!eps=91.04d0  !J/mol
-eps=0.998d3
-
-!sigma=2.963d-10 !m
-sigma=3.4d-10
-
-!Temp=(kb*300.0d0*6.022d23)/eps !Reduced units
-Temp=100
-Maxtime=10
 N=M**(3)*4 !Number of particles
-nhis=1000
 
 allocate(r(N,3),vel(N,3),force(N,3),g(nhis))
 
