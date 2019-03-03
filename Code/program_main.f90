@@ -14,6 +14,7 @@ N=M**(3)*4 !Number of particles
 
 allocate(r(N,3),vel(N,3),force(N,3),g(nhis))
 
+
 !System initialization
 
 call coordenadas(N,M,r,density,L)
