@@ -2,7 +2,7 @@ program estadistica
 implicit none
 integer :: i, j, k, dim_binn, mbin, nbin
 real*8, dimension(:), allocatable :: epot, ekin, etot, p, temp
-real*8 :: time, p, emitjana, varian
+real*8 :: emitjana, varian
 character(15) :: Epotbinning, Ekinbinning, Etotbinning
 integer, parameter :: val_eliminat=100! número de dades que s'eliminen del principi
 integer, parameter :: num_bin=10 !!poden ser més si cal
