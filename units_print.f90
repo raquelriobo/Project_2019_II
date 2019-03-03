@@ -18,5 +18,5 @@ timefs=timee*(1d-12)
 Tempp=(Temp*epsil)/(kb*Avognum)
 
 write(24,*) timefs, epot, ekin, (epot+ekin), p, Tempp
-
+!write(24,*) time, potential_E, kinetic_E, potential_E+kinetic_E
 end subroutine units_print

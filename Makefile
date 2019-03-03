@@ -9,8 +9,8 @@ TARGET=program_main
 
 #Generación de plots
 results.png: Results.txt
-	gnuplot plot_Energy_Raquel.gnu
-	gnuplot plot_Moment_Raquel.gnu
+	gnuplot Scripts_GNUPlot/plot_Energy_Raquel.gnu
+	gnuplot Scripts_GNUPLot/plot_Moment_Raquel.gnu
 
 #Ejecución del programa
 Results.txt : $(TARGET).x 

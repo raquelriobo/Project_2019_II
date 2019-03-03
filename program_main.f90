@@ -22,13 +22,14 @@ mass=40
 !eps=91.04d0  !J/mol
 eps=0.998d3
 
-sigma=2.963d-10 !m
-!sigma=3.4d-10
-Temp=(kb*300.0d0*6.022d23)/eps !Reduced units
-!Temp=10
+!sigma=2.963d-10 !m
+sigma=3.4d-10
+
+!Temp=(kb*300.0d0*6.022d23)/eps !Reduced units
+Temp=100
 Maxtime=10
 N=M**(3)*4 !Number of particles
-nhis=10000
+nhis=1000
 
 allocate(r(N,3),vel(N,3),force(N,3),g(nhis))
 

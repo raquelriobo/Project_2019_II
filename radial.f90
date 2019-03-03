@@ -5,17 +5,23 @@
       real*8 :: xr,yr,zr,delg,vb,g(nhis),d,pi,nid
       integer :: i,j,npart,switch,ngr,ig,nhis
       pi=acos(-1.0d0)
+
+      ! ### Mode 0: initialization ### !
+
       if (switch.eq.0)then
-          ngr=0
-          delg=L/(2.0d0*nhis)
-          g=0
+          ngr=0                 !Counter initialization
+          delg=L/(2.0d0*nhis)   !Bin size
+          g=0                   !Initialization of g(r)
       else if (switch.eq.1)then
           ngr=ngr+1
-          do i=1,npart-1
-             do j=i+1,npart
+          do i=1,npart-1        !Loop over all pairs
+             do j=i+1,npart      
                  xr=r(i,1)-r(j,1)
+                 xr=xr-L*nint(xr/L) 
                  yr=r(i,2)-r(j,2)
+                 yr=yr-L*nint(yr/L)
                  zr=r(i,3)-r(j,3)
+                 zr=zr-L*nint(zr/L)
                  d=sqrt(xr**2.0d0+yr**2.0d0+zr**2.0d0)
                  if (d.lt.L/2.0d0)then
                      ig=int(d/delg)
