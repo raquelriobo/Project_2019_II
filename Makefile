@@ -7,10 +7,9 @@ F90=gfortran
 #Main program
 TARGET=program_main
 
-#Move the results to a new folder
-
 
 #Energy, pressure, temperature and total momentum plot generation
+##############PONER INDEPENDIENTE################
 energy.eps: Results.txt
 	@echo "Generating plots with the results..."
 	gnuplot Scripts_GNUPlot/plot_Energy_Raquel.gnu
@@ -18,9 +17,9 @@ energy.eps: Results.txt
 	@echo "Done."
 
 #Main program execution
-Results.txt : $(TARGET).x
+Results.txt : $(TARGET).x Inputs/input.dat
 	@echo "Executing the program with the input values ..." 
-	./$(TARGET).x < input.dat
+	./$(TARGET).x < Inputs/input.dat
 
 #Compilation of the main program
 $(TARGET).x : $(TARGET).o Ekinetic_Raquel.o boundary.o verlet_vel.o fuerzas_Raquel.o in_velocities_Raquel.o coordenadas_Raquel.o units_print.o temperatura.o trajectory.o radial.o moment_Raquel.o forces_RaquelNEW.o input.o
@@ -29,7 +28,7 @@ $(TARGET).x : $(TARGET).o Ekinetic_Raquel.o boundary.o verlet_vel.o fuerzas_Raqu
 
 
 #All files with extension .f90 are compiled to objects .o
-%.o : %.f90
+%.o : Code/%.f90
 	@echo "Compiling the necessary subroutines ..."
 	$(F90) -c $<
 
@@ -37,7 +36,7 @@ $(TARGET).x : $(TARGET).o Ekinetic_Raquel.o boundary.o verlet_vel.o fuerzas_Raqu
 ##statistics : binning of the time series for different magnitudes
 .PHONY : statistics
 statistics :
-	$(F90) -o binning.x binning.f90
+	$(F90) -o binning.x binning2.f90
 	./binning.x
 	gnuplot Scripts_GNUPlot/plot_binning.gnu
 
@@ -56,4 +55,4 @@ backup:
 .PHONY : clean
 clean:
 	@echo Removing comiled objects and results
-	rm *.o *.txt *.png *.xyz *.x
+	rm *.o *.txt *.eps *.xyz *.x
