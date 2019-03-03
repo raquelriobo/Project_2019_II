@@ -1,4 +1,4 @@
-    subroutine input(M,dt,mass,density,Temp,Maxtime,sigma,eps,nhis)
+    subroutine input(M,dt,mass,density,Temp,sigma,eps,nhis,Maxtime)
         implicit none
         real*8, parameter :: kb = 1.3806d-23
         integer           :: M, nhis
@@ -9,10 +9,10 @@
         
         read(5,*)
         read(5,*)
-        read(5,*) M, dt, mass, Temp, press, Maxtime, sigma, eps, nhis
+        read(5,*) M, dt, mass, Temp, press, sigma, eps, nhis, Maxtime
  
 
         density = (press/9.869d-6)/(kb*Temp)
         density = density * sigma**3d0 !Reduced units
         Temp = (kb*Temp*6.022d23)/eps  !Reduced units
-    end subroutine input
+    end subroutine input 
