@@ -1,4 +1,4 @@
-#script binning
+#script gnuplot binning
 #set term postscript
 #set output 'Epotbin.eps'
 set term png
@@ -10,7 +10,8 @@ set xtics font ',11'
 set ytics font ',11'
 
 set xrange [0:2200]
-set yrange [0:0.52]
+#set yrange [0:0.52]  #Density 0.9
+set yrange [0:1.42]
 
 set xlabel 'm' font ',18'
 set ylabel 's' font ',18'
@@ -29,7 +30,8 @@ set xtics font ',11'
 set ytics font ',11'
 
 set xrange [0:2200]
-set yrange [0:0.52]
+#set yrange [0:0.52]  #density 0.9
+set yrange [0:1.42]
 
 set xlabel 'm' font ',18'
 set ylabel 's' font ',18'
@@ -48,7 +50,8 @@ set xtics font ',11'
 set ytics font ',11'
 
 set xrange [0:2200]
-set yrange [0:0.055555]
+#set yrange [0:0.055555] #density 0.9
+set yrange [0:0.1]
 
 set xlabel 'm' font ',18'
 set ylabel 's' font ',18'
@@ -57,6 +60,7 @@ set key bottom inside
 
 plot "Etotbinning.txt" u 1:2 t 'Total Energy' w lp pt 3 lc rgb "red"
 
+####
 #set term postscript
 #set output 'Etotbin.eps'
 set term png
@@ -67,7 +71,8 @@ set xtics font ',11'
 set ytics font ',11'
 
 set xrange [0:2200]
-set yrange [0:0.52]
+#set yrange [0:0.52]  #density 0.9
+set yrange [0:1.42]
 
 set xlabel 'm' font ',18'
 set ylabel 's' font ',18'
