@@ -19,13 +19,8 @@
             0.5*F(i,:)*dt**2
         end do 
 
-<<<<<<< HEAD
-            ! forces noves 
-            CALL forces_LJ(L,n_part,r_new,cut_off,F_new,press,E_pot)
-=======
         ! forces noves 
         CALL forces_LJ_Press(L,n_part,r_new,cut_off,F_new,press,E_pot)
->>>>>>> 896a73e349653c01eae6feaef99fb9005f4cd319
 
         ! velocitats noves
         do i=1,n_part
