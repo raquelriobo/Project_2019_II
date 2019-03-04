@@ -1,13 +1,16 @@
+! ### Binning ### !
 program estadistica
 implicit none
-integer :: i, j, k, dim_binn, mbin, nbin
-real*8, dimension(:), allocatable :: epot, ekin, etot, p, temp
-real*8 :: time, emitjana, varian
-integer, parameter :: val_eliminat=5000 !Number of first deleted values
-integer, parameter :: num_bin=10 !Bin number
+integer                             :: i, j, k
+integer                             :: dim_binn, mbin, nbin
+integer, parameter                  :: val_eliminat=5000        ! Number of first deleted values
+integer, parameter                  :: num_bin=10               ! Bin number
+real(8), dimension(:), allocatable  :: epot, ekin, etot, p, temp
+real(8)                             :: time, emitjana, varian
+
 open(unit=25, file="Results.txt") 
 
-! ###Subroutine that count lines ###  !
+! ###Subroutine that count lines ### !
 call count_lines(i)
 
 allocate(epot(i))
