@@ -34,6 +34,7 @@ real*8,allocatable :: g(:)        !Radial Distribution function
 
 call input(M,dt,mass,density,Temp,sigma,eps,nhis,Maxtime) 
 
+
 !### With the M given, calculate the total number of particles ###!
 
 N=M**(3)*4
@@ -46,6 +47,7 @@ allocate(r(N,3),vel(N,3),force(N,3),g(nhis))
 
 !Generate FCC lattice
 call coordenadas(N,M,r,density,L)
+
 
 !Adjust lattice with PBC
 call boundary_conditions(r,N,L)
@@ -68,9 +70,6 @@ time=0.d0
 !Calculate initial forces,energies,pressure
 call forces_LJ(L,N,r,cut,force,press,upot)
 
-!Print first values of the magnitudes
-call units_print(time,upot,kin,press,L,dt,sigma,eps,density,Temp,mass)
-
 !### Main Molecular Dynamics loop ###!
 
 do while (time.lt.Maxtime)
@@ -78,18 +77,23 @@ do while (time.lt.Maxtime)
     counter=counter+1
     !New positions and velocities
     call verlet_velocity(N,cut,press,r,vel,force,dt,upot,L)
-    !Kinetical energy calculation
-    call kinetic_en(vel,N,kin)
-    !Instant temperature calculation
-    call temperatura(kin,N,Temp)
-    !Print positions
-    call trajectory(r,N,time,counter)
-    !Pirnt magnitudes
-    call units_print(time,upot,kin,press,L,dt,sigma,eps,density,Temp,mass)
-    !Update RDF
-    call rdf(r,N,L,1,nhis,density,delg,ngr,g)
-    !Print total momentum
-    call momentum(time,vel,N)
+
+    if (time.gt.0.3*Maxtime)then !After it equilibrates measure the properties
+
+        !Kinetical energy calculation
+        call kinetic_en(vel,N,kin)
+        !Instant temperature calculation
+        call temperatura(kin,N,Temp)
+        !Print positions
+        call trajectory(r,N,time,counter)
+        !Pirnt magnitudes
+        call units_print(time,upot,kin,press,L,dt,sigma,eps,density,Temp,mass)
+        !Update RDF
+        call rdf(r,N,L,1,nhis,density,delg,ngr,g)
+        !Print total momentum
+        call momentum(time,vel,N)
+
+    end if
 end do
 
 !Final RDF calculation

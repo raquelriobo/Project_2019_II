@@ -12,11 +12,9 @@ TARGET=program_main
 energy.eps : Results.txt
 	@echo "Generating plots with the results..."
 	gnuplot Scripts_GNUPlot/plot_Energy_Raquel.gnu
-	@echo "Done!"
-total_momentum.eps : Momentum.txt
-	gnuplot plot_momentum.gnu
-rdf.eps : radial.txt
+	gnuplot Scripts_GNUPlot/plot_momentum.gnu
 	gnuplot Scripts_GNUPlot/plot_rdf.gnu
+	@echo "Done!"
 
 #Main program execution
 Results.txt : $(TARGET).x Inputs/input.dat
