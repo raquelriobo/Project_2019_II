@@ -21,9 +21,3 @@ set ylabel 'Temperature (K)'
 set title 'Temperature vs time'
 plot 'Results.txt'  u 1:6 w l notitle  lc rgb 'red'
 
-set output 'total_momentum.eps'
-set ylabel 'Momentum (reduced units)'
-set title 'Total momentum vs time'
-plot 'Momentum.txt' u 1:2 t 'Px' w l lc rgb 'pink',\
-      '' u 1:3 t 'Py' w l lc rgb 'skyblue',\
-      '' u 1:4 t 'Pz' w l lc rgb 'orange'

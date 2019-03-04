@@ -6,7 +6,7 @@ program main
 implicit none
 integer :: M              !Number of particles per dimension in FCC lattice
 integer :: N              !Total number of particles
-integer :: , nhis,ngr     !RDF subroutine counters
+integer :: nhis,ngr       !RDF subroutine counters
 integer :: i,counter
 real*8  :: upot           !Potential Energy (reduced units)
 real*8  :: time           !Time (reduced units)

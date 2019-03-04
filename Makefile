@@ -1,7 +1,7 @@
-#Makefile
+##Makefile for a Molecular Dynamics simulation program
 
 
-#Compilador
+#Compiler
 F90=gfortran
 
 #Main program
@@ -9,12 +9,14 @@ TARGET=program_main
 
 
 #Energy, pressure, temperature and total momentum plot generation
-##############PONER INDEPENDIENTE################
-energy.eps: Results.txt
+energy.eps : Results.txt
 	@echo "Generating plots with the results..."
 	gnuplot Scripts_GNUPlot/plot_Energy_Raquel.gnu
+	@echo "Done!"
+total_momentum.eps : Momentum.txt
+	gnuplot plot_momentum.gnu
+rdf.eps : radial.txt
 	gnuplot Scripts_GNUPlot/plot_rdf.gnu
-	@echo "Done."
 
 #Main program execution
 Results.txt : $(TARGET).x Inputs/input.dat
@@ -51,8 +53,14 @@ help :
 backup:
 	tar -czvf "backup.tar.gz" *.f90
 
-##clean : rule to clean executable objects and txt files
-.PHONY : clean
-clean:
-	@echo Removing comiled objects and results
+##clean_all : rule to clean executable objects, results and images
+.PHONY : clean_all
+clean_all:
+	@echo Removing compiled objects and results
 	rm *.o *.txt *.eps *.xyz *.x
+
+##clean_exe : rule to clean only executable objects
+.PHONY : clean_exe
+clean_exe:
+	@echo Removing compiled objects only
+	rm *.o *.x
