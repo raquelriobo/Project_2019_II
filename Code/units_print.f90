@@ -23,5 +23,6 @@ Tempp=(Temp*epsil)/(kb*Avognum) !Temperature
 
 !Print the results
 write(24,*) timefs, epot, ekin, (epot+ekin), p, Tempp
+! time, Potential Energy, Kinetic Energy, Total Energy, Pressure and Temperature !
 
 end subroutine units_print
