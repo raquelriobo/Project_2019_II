@@ -3,11 +3,11 @@
   3, 0.0003d0, 4.0d0, 300, 1, 2.963d-10, 91.04d0, 1000, 40
 
   # M: number of particles per dimension in FCC lattice
-  # time step: time increment in each step
+  # time step: time increment in each step (reduced)
   # mass: atomic mass (g/mol)
-  # Temperature: initial temperature in K
-  # pressure: initial pressure in atm
-  # sigma: Lenard Jones potential parameter  
-  # eps: Lenard Jones potential parameter 
+  # Temperature: initial temperature (K)
+  # pressure: initial pressure (atm)
+  # sigma: Lenard Jones potential parameter for He (m) 
+  # eps: Lenard Jones potential parameter for He (J/mol)
   # g(r) steps: number of steps to compute g(r)
-  # final simulation time: maximum time of the simulation
+  # final simulation time: maximum time of the simulation (reduced)
