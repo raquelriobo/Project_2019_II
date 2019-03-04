@@ -14,6 +14,9 @@ energy.eps : Results.txt
 	gnuplot Scripts_GNUPlot/plot_Energy_Raquel.gnu
 	gnuplot Scripts_GNUPlot/plot_momentum.gnu
 	gnuplot Scripts_GNUPlot/plot_rdf.gnu
+	@echo Copying to Results folder...
+	mkdir -p Results
+	cp *.txt *.eps *.xyz Results
 	@echo "Done!"
 
 #Main program execution
@@ -39,6 +42,9 @@ statistics :
 	$(F90) -o binning.x Code/binning2.f90
 	./binning.x
 	gnuplot Scripts_GNUPlot/plot_binning.gnu
+	@echo Moving results to Results_binning
+	mkdir -p Results_binning
+	cp *binning.txt *mit.txt *bin.eps Results_binning
 
 ##help: instructions about the use of this Makefile
 .PHONY : help

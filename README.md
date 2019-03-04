@@ -34,12 +34,12 @@ Folders:
 - Code: all necessary .f90 files
 - Inputs: different input files for calculation
 - Scripts_GNUPlot: scripts to obtain figures
-- Results_parameters: results and figures for a MD simulation of 108 He atoms at approximately 1 atm and 300K (NVE ensemble)
+- Results_default: results and figures for a MD simulation of 108 He atoms at approximately 1 atm and 300K (NVE ensemble)
 
 Execution instructions:
 
-- To obtain results with the inputs found in input.dat, just type 'make' in the main directory
-- To obtain the binning plots, 'make statistics'
+- To obtain results with the inputs found in input.dat, just type 'make' in the main directory, results in folder 'Results'
+- To obtain the binning plots, 'make statistics', results in folder 'Results binning'
 - For more options in Makefile, 'make help'
 
 Subroutines:

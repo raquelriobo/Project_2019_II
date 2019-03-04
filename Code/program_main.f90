@@ -76,20 +76,20 @@ do while (time.lt.Maxtime)
     !New positions and velocities
     call verlet_velocity(N,cut,press,r,vel,force,dt,upot,L)
    
-    if (time.gt.0.3*Maxtime)then !After it equilibrates measure the properties
+    if (time.gt.0.4*Maxtime)then !After it equilibrates measure the properties
 
         !Kinetical energy calculation
         call kinetic_en(vel,N,kin)
         !Instant temperature calculation
         call temperatura(kin,N,Temp)
         !Print positions
-        call trajectory(r,N,time-time*0.3,counter)
+        call trajectory(r,N,time-Maxtime*0.4,counter)
         !Pirnt magnitudes
-        call units_print(time-time*0.3,upot,kin,press,L,dt,sigma,eps,density,Temp,mass)
+        call units_print(time-Maxtime*0.4,upot,kin,press,L,dt,sigma,eps,density,Temp,mass)
         !Update RDF
         call rdf(r,N,L,1,nhis,density,delg,ngr,g)
         !Print total momentum
-        call momentum(time-time*0.3,vel,N)
+        call momentum(time-Maxtime*0.4,vel,N)
 
     end if
 end do

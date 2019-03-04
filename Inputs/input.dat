@@ -11,3 +11,5 @@
   # eps: Lenard Jones potential parameter for He (J/mol)
   # g(r) steps: number of steps to compute g(r)
   # final simulation time: maximum time of the simulation (reduced)
+
+LJ parameters eps and sigma from: Aziz, R. A., McCourt, F. R. W. & Wong, C. C. K. Molecular Physics 61, 1487–1511 (1987).
