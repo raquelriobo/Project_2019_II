@@ -3,14 +3,14 @@ program estadistica
 implicit none
 integer                             :: i, j, k
 integer                             :: dim_binn, mbin, nbin
-integer, parameter                  :: val_eliminat=5000        ! Number of first deleted values
-integer, parameter                  :: num_bin=10               ! Bin number
+integer, parameter                  :: val_eliminat=0        ! Number of first deleted values
+integer, parameter                  :: num_bin=11               ! Bin number
 real(8), dimension(:), allocatable  :: epot, ekin, etot, p, temp
 real(8)                             :: time, emitjana, varian
 
 open(unit=25, file="Results.txt") 
 
-! ###Subroutine that count lines ### !
+! ###Subroutine that counts lines ### !
 call count_lines(i)
 
 allocate(epot(i))
@@ -55,14 +55,14 @@ end do
 do k= 1, num_bin
  mbin=2**(k-1)
  nbin=int(dim_binn/mbin)
- call binning(dim_binn, mbin, nbin, epot(val_eliminat+1:i), varian, emitjana, 'Presbinning.txt', 'Presmit.txt')
+ call binning(dim_binn, mbin, nbin, p(val_eliminat+1:i), varian, emitjana, 'Presbinning.txt', 'Presmit.txt')
 end do
 
 ! ### Temperature ### !
 do k= 1, num_bin
  mbin=2**(k-1)
  nbin=int(dim_binn/mbin)
- call binning(dim_binn, mbin, nbin, epot(val_eliminat+1:i), varian, emitjana, 'Tempbinning.txt', 'Tempmit.txt')
+ call binning(dim_binn, mbin, nbin, temp(val_eliminat+1:i), varian, emitjana, 'Tempbinning.txt', 'Tempmit.txt')
 end do
 
 contains

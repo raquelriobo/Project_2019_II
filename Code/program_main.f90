@@ -85,13 +85,13 @@ do while (time.lt.Maxtime)
         !Instant temperature calculation
         call temperatura(kin,N,Temp)
         !Print positions
-        call trajectory(r,N,time,counter)
+        call trajectory(r,N,time-time*0.3,counter)
         !Pirnt magnitudes
-        call units_print(time,upot,kin,press,L,dt,sigma,eps,density,Temp,mass)
+        call units_print(time-time*0.3,upot,kin,press,L,dt,sigma,eps,density,Temp,mass)
         !Update RDF
         call rdf(r,N,L,1,nhis,density,delg,ngr,g)
         !Print total momentum
-        call momentum(time,vel,N)
+        call momentum(time-time*0.3,vel,N)
 
     end if
 end do

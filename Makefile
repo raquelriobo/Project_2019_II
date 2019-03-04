@@ -36,7 +36,7 @@ $(TARGET).x : $(TARGET).o Ekinetic_Raquel.o boundary.o verlet_vel.o in_velocitie
 ##statistics : binning of the time series for different magnitudes
 .PHONY : statistics
 statistics :
-	$(F90) -o binning.x binning2.f90
+	$(F90) -o binning.x Code/binning2.f90
 	./binning.x
 	gnuplot Scripts_GNUPlot/plot_binning.gnu
 
