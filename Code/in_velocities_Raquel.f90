@@ -7,10 +7,13 @@ real(8) :: vel(N,3) ! Velocity matrix
 real(8) :: Temp     ! Temperature
 real(8) :: kin      ! Kinetic Energy
 real(8) :: suma(N)
+real(8) :: r1
 
 ! ### Random Velocities ### !
+call random_seed
 do i=1,N
-    vel(i,:)=(2d0*rand()-1d0)/2d0
+    call random_number(r1)
+    vel(i,:)=(2d0*r1-1d0)/2d0
 end do
 
 ! ### Kinetic energy ### !
