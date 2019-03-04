@@ -6,14 +6,17 @@ integer :: N        ! Number of particles
 real(8) :: vel(N,3) ! Velocity matrix
 real(8) :: Temp     ! Temperature
 real(8) :: kin      ! Kinetic Energy
-real(8) :: suma(N)
+real(8) :: suma(3)
 real(8) :: r1
 
 ! ### Random Velocities ### !
+
 call random_seed
 do i=1,N
-    call random_number(r1)
-    vel(i,:)=(2d0*r1-1d0)/2d0
+    do j=1,3
+      call random_number(r1)
+      vel(i,j)=(2d0*r1-1d0)/2d0
+    end do
 end do
 
 ! ### Kinetic energy ### !
@@ -37,4 +40,5 @@ do i=1,N
         vel(i,j)=vel(i,j)-suma(j)
     enddo
 enddo
+
 end subroutine in_velocity

@@ -54,7 +54,7 @@ else if (switch.eq.1)then
 
 else if (switch.eq.2)then
    open(90,file="radial.txt")
-   do i=1,nhis
+   do i=1,nhis-1
       d=delg*(i+0.5) !Distance 
       vb=((i+1)**3.0d0-i**3.0d0)*delg**3.0d0 !Volume between bins
       nid=(4.0d0/3.0d0)*pi*vb*rho            !Number of ideal gas particles in vb

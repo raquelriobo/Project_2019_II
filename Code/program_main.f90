@@ -48,7 +48,6 @@ allocate(r(N,3),vel(N,3),force(N,3),g(nhis))
 !Generate FCC lattice
 call coordenadas(N,M,r,density,L)
 
-print *, L
 
 !Adjust lattice with PBC
 call boundary_conditions(r,N,L)
@@ -71,9 +70,6 @@ time=0.d0
 !Calculate initial forces,energies,pressure
 call forces_LJ(L,N,r,cut,force,press,upot)
 
-!Print first values of the magnitudes
-call units_print(time,upot,kin,press,L,dt,sigma,eps,density,Temp,mass)
-
 !### Main Molecular Dynamics loop ###!
 
 do while (time.lt.Maxtime)
@@ -82,7 +78,7 @@ do while (time.lt.Maxtime)
     !New positions and velocities
     call verlet_velocity(N,cut,press,r,vel,force,dt,upot,L)
 
-    if (time.gt.0.3*Maxtime)then !After it equilibrates
+    if (time.gt.0.3*Maxtime)then !After it equilibrates measure the properties
 
         !Kinetical energy calculation
         call kinetic_en(vel,N,kin)
