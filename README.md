@@ -41,37 +41,37 @@ Execution instructions:
 - To obtain the binning plots, 'make statistics'
 - For more options in Makefile, 'make help'
 
-Files:
+Subroutines:
 
-1. coordenadas_Raquel.f90   : Initiallice positions with a FCC structure according with the pressure
+1. coordenadas_Raquel.f90   : Initialize positions with a FCC structure according to the density and the number of particles
 
-2. in_velocities_Raquel.f90 : Intitiallice velocities
+2. in_velocities_Raquel.f90 : Intitialize velocities and make total velocity of the system 0
 
-3. forces_RaquelNEW.f90     : Compute the forces that act on each particle
+3. forces_RaquelNEW.f90     : Compute the forces that act on each particle, the potential energy
 
 4. moment_Raquel.f90        : Compute the different components of the total momentum
 
 5. Ekinetic_Raquel.f90      : Compute the Kinetic energy
 
-6. trajectory.f90           : 
+6. trajectory.f90           : Print the trajectory at each step
 
-7. radial.f90               :
+7. radial.f90               : Compute the radial distribution function
 
-8. boundary.f90             :
+8. boundary.f90             : Apply boundary conditions
 
-9. temperatura.f90          :
+9. temperatura.f90          : Compute instant temperature
 
-10. verlet_vel.f90          :
+10. verlet_vel.f90          : Velocity verlet integrator
 
-11. units_print.f90         :
+11. units_print.f90         : Print magnitudes with correct units
 
-12. binning2.f90            : Compute the
+12. binning2.f90            : Estimate statistical error and average value
 
-13. program_main.f90        :
+13. program_main.f90        : Main program
 
-14. Makefile                :
+14. Makefile                
 
-15. input.f90               :
+15. input.f90               : Reads the input.dat file
 
-6. GNUPLot scripts          :
+          
 
