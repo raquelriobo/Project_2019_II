@@ -49,7 +49,7 @@ help :
 ##backup : make a compressed copy of the base code
 .PHONY : backup
 backup:
-	tar -czvf "backup.tar.gz" *.f90
+	tar -czvf "backup.tar.gz" Code/*.f90
 
 ##clean_all : rule to clean executable objects, results and images
 .PHONY : clean_all

@@ -34,6 +34,7 @@ Folders:
 - Code: all necessary .f90 files
 - Inputs: different input files for calculation
 - Scripts_GNUPlot: scripts to obtain figures
+- Results_parameters: results and figures for a MD simulation of 108 He atoms at approximately 1 atm and 300K (NVE ensemble)
 
 Execution instructions:
 

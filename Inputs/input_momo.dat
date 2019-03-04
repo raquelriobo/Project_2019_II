@@ -1,9 +1,0 @@
-  M, dt, mass, Temp, press, sigma, eps, nhis, Maxtime
-
-  3, 0.0003d0, 40.0d0, 7.23d26, 2.256d27 , 3.4d-10, 0.998d3, 10000, 10 
-
-  !Considerem T_red=10
-  !Temp = T_red * eps / kb
-  !press_atm = press_Pa * 9.86923d-6 = 2.25585d27
-  !press_Pa = densitat * kb*T = 2.2857d32
-  !densitat = densitat_red / sigma^3 = 2.2898d28

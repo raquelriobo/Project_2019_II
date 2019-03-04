@@ -52,8 +52,6 @@ call coordenadas(N,M,r,density,L)
 !Adjust lattice with PBC
 call boundary_conditions(r,N,L)
 
-!Print initial configuration
-call trajectory(r,N,time,counter)
 
 !Assing initial velocities consistent with temperature
 call in_velocity(vel,N,Temp)
@@ -77,7 +75,7 @@ do while (time.lt.Maxtime)
     counter=counter+1
     !New positions and velocities
     call verlet_velocity(N,cut,press,r,vel,force,dt,upot,L)
-
+   
     if (time.gt.0.3*Maxtime)then !After it equilibrates measure the properties
 
         !Kinetical energy calculation
