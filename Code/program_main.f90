@@ -96,6 +96,8 @@ do while (time.lt.Maxtime)
         call rdf(r,N,L,1,nhis,density,delg,ngr,g)
         !Print total momentum
         call momentum(time,vel,N)
+
+    end if
 end do
 
 !Final RDF calculation
