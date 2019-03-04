@@ -34,6 +34,7 @@ real*8,allocatable :: g(:)        !Radial Distribution function
 
 call input(M,dt,mass,density,Temp,sigma,eps,nhis,Maxtime) 
 
+
 !### With the M given, calculate the total number of particles ###!
 
 N=M**(3)*4
