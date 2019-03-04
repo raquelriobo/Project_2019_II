@@ -11,6 +11,7 @@ real(8) :: r1
 
 ! ### Random Velocities ### !
 
+!Assign a random velocity component between -0.5 and 0.5
 call random_seed
 do i=1,N
     do j=1,3
@@ -18,12 +19,6 @@ do i=1,N
       vel(i,j)=(2d0*r1-1d0)/2d0
     end do
 end do
-
-! ### Kinetic energy ### !
-call kinetic_en(vel,N,kin)
-
-! ### Reescaling Kinetic Energy ### !
-vel=vel*sqrt(N*3d0*Temp/(2d0*kin))
 
 ! ### Total velocity = 0 ### !
 suma=0d0
@@ -40,5 +35,11 @@ do i=1,N
         vel(i,j)=vel(i,j)-suma(j)
     enddo
 enddo
+
+!Kinetic energy calculation
+call kinetic_en(vel,N,kin)
+
+!Reescaling velocities to match kinetic energy
+vel=vel*sqrt(N*3d0*Temp/(2d0*kin))
 
 end subroutine in_velocity
