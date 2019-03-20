@@ -39,7 +39,7 @@ Folders:
 Execution instructions:
 
 - To obtain results with the inputs found in input.dat, just type 'make' in the main directory, results in folder 'Results'
-- To obtain the binning plots, 'make statistics', results in folder 'Results binning'
+- To obtain the binning plots, 'make statistics', results in folder 'Results_binning'
 - For more options in Makefile, 'make help'
 
 Subroutines:
