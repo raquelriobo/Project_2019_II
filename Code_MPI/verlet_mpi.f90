@@ -98,5 +98,5 @@ if(rank==0) then
   r = rnew ;    v = vnew ;    F = Fnew ;
 end if
 
-call boundary_conditions(r,N,L) 
+call boundary_conditions(r,N,L,part1,part2,root,rank,nini,resizedtype,size) 
 end subroutine verlet_mpi
