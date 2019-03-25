@@ -2,6 +2,7 @@
 ! ### INTEGRATION : VERLET VELOCITY #### !
 subroutine verlet_velocity(n_part,cut_off,press,r,v,F,dt,E_pot,L)
 implicit none
+include 'mpif.h'
 integer, intent(in) :: n_part                       ! Number of particles
 real(8), intent(in) :: cut_off                      
 real(8), intent(in) :: dt                           ! Time steps
@@ -12,13 +13,16 @@ real(8)             :: L                            ! Cell longitude
 real(8)             :: press                        ! Pressure
 real(8)             :: E_Pot                        ! Potential energy
 integer             :: i
+integer             :: ierr
               
               
 ! ### Compute new positions with verlet velocity algorithm ###! 
 do i=1,n_part
     r_new(i,:) = r(i,:) + v(i,:)*dt + &
     0.5*F(i,:)*dt**2
-end do 
+end do
+ 
+call MPI_BARRIER(MPI_COMM_WORLD,ierr)
 
 ! ### Compute new forces ###!
 CALL forces_LJ(L,n_part,r_new,cut_off,F_new,press,E_pot)
