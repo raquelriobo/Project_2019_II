@@ -52,7 +52,7 @@ call MPI_COMM_SIZE(MPI_COMM_WORLD,size,ierr)
 !### Read input parameters from input.dat ###!
 
 !if (rank.eq.root)then
-  call input(M,dt,mass,density,Temp,sigma,eps,nhis,Maxtime,rank) 
+!  call input(M,dt,mass,density,Temp,sigma,eps,nhis,Maxtime,rank) 
 !  call MPI_BCAST(M,1,MPI_INTEGER,root,MPI_COMM_WORLD,ierr)
 !  call MPI_BCAST(dt,1,MPI_REAL8,root,MPI_COMM_WORLD,ierr)
 !  call MPI_BCAST(density,1,MPI_REAL8,root,MPI_COMM_WORLD,ierr)
@@ -63,17 +63,18 @@ call MPI_COMM_SIZE(MPI_COMM_WORLD,size,ierr)
 !  call MPI_BCAST(Maxtime,1,MPI_INTEGER,root,MPI_COMM_WORLD,ierr)
 !end if
 
-call MPI_BARRIER(MPI_COMM_WORLD,ierr)
+!call MPI_BARRIER(MPI_COMM_WORLD,ierr)
 
-!M=3
-!dt=0.0003
-!density=0.9
-!Temp=10
-!sigma=3.4d-10
-!eps=0.9d3
-!nhis=1000
-!Maxtime=1
-!mass=40
+M=3
+dt=0.0003
+density=0.9
+Temp=10
+sigma=3.4d-10
+eps=0.9d3
+nhis=1000
+Maxtime=1
+mass=40
+
 
 !### With the M given, calculate the total number of particles ###!
 
@@ -129,14 +130,17 @@ call MPI_BARRIER(MPI_COMM_WORLD,ierr)
 call coordenadas(N,M,r,density,L)
 
 call MPI_BARRIER(MPI_COMM_WORLD,ierr)
+
 !Adjust lattice with PBC
 call boundary_conditions(r,N,L)
 call MPI_BARRIER(MPI_COMM_WORLD,ierr)
+
 !Assing initial velocities consistent with temperature
 call in_velocity(vel,N,Temp,part1,part2,nini,nfin,nini_first,nfin_first,&
 root,rank)
 
 call MPI_BARRIER(MPI_COMM_WORLD,ierr)
+
 !Initialize RDF
 call rdf(r,N,L,0,nhis,density,delg,ngr,g)
 
@@ -145,10 +149,11 @@ cut=L*0.5d0
 
 !Time initialization
 time=0.d0
-
+counter=0
 
 !Calculate initial forces,energies,pressure
 call forces_LJ(L,N,r,cut,force,press,upot)
+
 !### Main Molecular Dynamics loop ###!
 call MPI_BARRIER(MPI_COMM_WORLD,ierr)
 do while (time.lt.Maxtime)
@@ -157,7 +162,7 @@ do while (time.lt.Maxtime)
     !New positions and velocities
     call verlet_velocity(N,cut,press,r,vel,force,dt,upot,L)
     call MPI_BARRIER(MPI_COMM_WORLD,ierr)
-    if (time.gt.0.4*Maxtime)then !After it equilibrates measure the properties
+!    if (time.gt.0.4*Maxtime)then !After it equilibrates measure the properties
 
         !Kinetical energy calculation
         call kinetic_en(vel,N,kin,part1,part2,nini,nfin,nini_first,nfin_first,&
@@ -180,7 +185,7 @@ root,rank)
         !Print total momentum
         call momentum(time,vel,N)
 
-    end if
+ !   end if
 end do
 
 !Final RDF calculation

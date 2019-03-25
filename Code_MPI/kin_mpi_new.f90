@@ -36,17 +36,17 @@ end if
 !### Kinetic energy calculation ###!
 
 if (rank.ne.0)then
-    do i=1,N
+    do i=1,part1
         kin_aux=kin_aux+0.5d0*(vpart1(i,1)**2d0+vpart1(i,2)**2d0+vpart1(i,3)**2d0)
     end do
 else
-    do i=1,N
+    do i=1,part2
         kin_aux=kin_aux+0.5d0*(vpart2(i,1)**2d0+vpart2(i,2)**2d0+vpart2(i,3)**2d0)
     end do
 end if
 print*, "Task",rank,kin_aux
 
-call MPI_barrier(MPI_COMM_WORLD,ierr)
+!call MPI_barrier(MPI_COMM_WORLD,ierr)
 
 call MPI_ALLREDUCE(kin_aux,kin,1,MPI_REAL8,MPI_SUM,MPI_COMM_WORLD,ierr)
 
