@@ -50,5 +50,6 @@ end do
 end if
 
 !call MPI_Barrier(MPI_COMM_WORLD,ierr)
-call MPI_Bcast(r,n_part,MPI_REAL8,root,MPI_COMM_WORLD,ierr)
+call MPI_Bcast(r,n_part*3,MPI_REAL8,root,MPI_COMM_WORLD,ierr)
+print*,"boundaries mpi"
 end subroutine boundary_conditions_mpi

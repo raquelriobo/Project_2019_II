@@ -102,5 +102,5 @@ end if
 call MPI_Bcast(r,N*3,MPI_REAL8,root,MPI_COMM_WORLD,ierr)
 call MPI_Bcast(v,N*3,MPI_REAL8,root,MPI_COMM_WORLD,ierr)
 call MPI_Bcast(F,N*3,MPI_REAL8,root,MPI_COMM_WORLD,ierr)
-call boundary_conditions(r,N,L,part1,part2,root,rank,nini,resizedtype,size)
+call boundary_conditions_mpi(r,N,L,part1,part2,root,rank,nini,resizedtype,size)
 end subroutine verlet_mpi
