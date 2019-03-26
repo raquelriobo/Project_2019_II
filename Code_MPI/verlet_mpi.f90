@@ -47,7 +47,7 @@ do i=1,part2
 end do
 end if
 
-call MPI_Barrier(MPI_COMM_WORLD,ierr)
+!call MPI_Barrier(MPI_COMM_WORLD,ierr)
 numpart=part1*3
 call MPI_Gather(rnew_part1,numpart,MPI_REAL8,rnew_part1_aux,1, &
                 resizedtype,root,MPI_COMM_WORLD,ierr)
@@ -61,7 +61,9 @@ if(rank==root) then
     end do
 end if
 
-CALL MPI_Bcast(rnew,N,MPI_REAL8,root,MPI_COMM_WORLD,ierr)
+CALL MPI_Bcast(rnew,N*3,MPI_REAL8,root,MPI_COMM_WORLD,ierr)
+
+!print*,"task",rank,rnew(1,:)
 
 ! ### Compute new forces ###!
 CALL forces_LJ(L,N,rnew,cut_off,Fnew,press,E_pot)
@@ -97,8 +99,8 @@ if(rank==0) then
   r = rnew ;    v = vnew ;    F = Fnew ;
 end if
 
-call MPI_Bcast(r,N,MPI_REAL8,root,MPI_COMM_WORLD,ierr)
-call MPI_Bcast(v,N,MPI_REAL8,root,MPI_COMM_WORLD,ierr)
-call MPI_Bcast(F,N,MPI_REAL8,root,MPI_COMM_WORLD,ierr)
+call MPI_Bcast(r,N*3,MPI_REAL8,root,MPI_COMM_WORLD,ierr)
+call MPI_Bcast(v,N*3,MPI_REAL8,root,MPI_COMM_WORLD,ierr)
+call MPI_Bcast(F,N*3,MPI_REAL8,root,MPI_COMM_WORLD,ierr)
 call boundary_conditions(r,N,L,part1,part2,root,rank,nini,resizedtype,size)
 end subroutine verlet_mpi

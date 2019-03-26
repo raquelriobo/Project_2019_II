@@ -2,7 +2,7 @@ subroutine in_velocity_mpi(vel,N,Temp,part1,part2,nini,nfin,&
 root,rank,resizedtype)
 implicit none
 include 'mpif.h'
-real*8 :: vel(N,3), vel_end2(N,3), vel_final(N,3)
+real*8 :: vel(N,3),vel_final(N,3)
 real*8 :: veltot(N,3), vel_end(N,3)
 integer :: N,i,nini,nfin,j
 integer :: nini_first, nfin_first
@@ -105,15 +105,16 @@ end if
 if (rank==root)then;
 
  do i =1,part2 
-   vel_end2(i,:)=vpart2(i,:)
+   vel(i,:)=vpart2(i,:)
  end do
 
  do i=1,N-part2
-    vel_end2(i+part2,:)=vel_final(part1+i,:)
+    vel(i+part2,:)=vel_final(part1+i,:)
  end do
 
 end if
 
-call MPI_BCAST(vel_end2, N*3, MPI_REAL8, root, MPI_COMM_WORLD, ierr) 
+call MPI_BCAST(vel, N*3, MPI_REAL8, root, MPI_COMM_WORLD, ierr) 
+
 
 end subroutine in_velocity_mpi

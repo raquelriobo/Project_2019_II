@@ -9,15 +9,15 @@ TARGET=program_main
 
 
 #Energy, pressure, temperature and total momentum plot generation
-#energy.eps : Results.txt
-#	@echo "Generating plots with the results..."
-#	gnuplot Scripts_GNUPlot_MPI/plot_Energy_Raquel.gnu
-#	gnuplot Scripts_GNUPlot/plot_momentum.gnu
-#	gnuplot Scripts_GNUPlot/plot_rdf.gnu
-#	@echo Copying to Results folder...
-#	mkdir -p Results
-#	cp *.txt *.eps *.xyz Results
-#	@echo "Done!"
+energy.eps : Results.txt
+	@echo "Generating plots with the results..."
+	gnuplot Scripts_GNUPlot/plot_Energy_Raquel.gnu
+	gnuplot Scripts_GNUPlot/plot_momentum.gnu
+	gnuplot Scripts_GNUPlot/plot_rdf.gnu
+	@echo Copying to Results folder...
+	mkdir -p Results
+	cp *.txt *.eps *.xyz Results
+	@echo "Done!"
 
 #Main program execution
 Results.txt : $(TARGET).x
@@ -25,13 +25,13 @@ Results.txt : $(TARGET).x
 #	mpirun -np 2 $(TARGET).x < Inputs_MPI/input.dat > log
 	mpirun -np 2 $(TARGET).x
 #Compilation of the main program
-$(TARGET).x : $(TARGET).o boundary.o verlet_vel.o in_velocities_Raquel.o coordenadas_Raquel.o units_print.o temperatura.o trajectory.o radial.o moment_Raquel.o forces_RaquelNEW.o input.o kin_mpi_new.o
+$(TARGET).x : $(TARGET).o boundary.o verlet_vel.o in_velocities_Raquel.o coordenadas_Raquel.o units_print.o temperatura.o trajectory.o radial.o moment_Raquel.o forces_RaquelNEW.o input.o kin_mpi_new.o mpi_initial_velocity.o boundary_mpi.o verlet_mpi.o
 	@echo "Compiling program_main.x ..."
-	mpif90 -g -o $(TARGET).x $(TARGET).o boundary.o verlet_vel.o in_velocities_Raquel.o coordenadas_Raquel.o units_print.o temperatura.o trajectory.o radial.o moment_Raquel.o forces_RaquelNEW.o input.o kin_mpi_new.o
+	mpif90 -g -o $(TARGET).x $(TARGET).o boundary.o verlet_vel.o in_velocities_Raquel.o coordenadas_Raquel.o units_print.o temperatura.o trajectory.o radial.o moment_Raquel.o forces_RaquelNEW.o input.o kin_mpi_new.o mpi_initial_velocity.o boundary_mpi.o verlet_mpi.o
 
 #$(TARGET).o : Code_MPI/program_main.f90
 $(TARGET).o : Code_MPI/$(TARGET).f90
-	mpif90 -g -c Code_MPI/$(TARGET).f90 Code_MPI/boundary.f90 Code_MPI/verlet_vel.f90 Code_MPI/in_velocities_Raquel.f90 Code_MPI/coordenadas_Raquel.f90 Code_MPI/units_print.f90 Code_MPI/temperatura.f90 Code_MPI/trajectory.f90 Code_MPI/radial.f90 Code_MPI/moment_Raquel.f90 Code_MPI/forces_RaquelNEW.f90 Code_MPI/input.f90 Code_MPI/kin_mpi_new.f90 
+	mpif90 -g -c Code_MPI/$(TARGET).f90 Code_MPI/boundary.f90 Code_MPI/verlet_vel.f90 Code_MPI/in_velocities_Raquel.f90 Code_MPI/coordenadas_Raquel.f90 Code_MPI/units_print.f90 Code_MPI/temperatura.f90 Code_MPI/trajectory.f90 Code_MPI/radial.f90 Code_MPI/moment_Raquel.f90 Code_MPI/forces_RaquelNEW.f90 Code_MPI/input.f90 Code_MPI/kin_mpi_new.f90 Code_MPI/mpi_initial_velocity.f90 Code_MPI/boundary_mpi.f90 Code_MPI/verlet_mpi.f90 
 
 #Parallel
 #kin_mpi.o : MPI_Code_MPI/kin_mpi.f90

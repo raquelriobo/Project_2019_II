@@ -50,9 +50,8 @@ call MPI_COMM_SIZE(MPI_COMM_WORLD,size,ierr)
 
 
 !### Read input parameters from input.dat ###!
-
 !if (rank.eq.root)then
-!  call input(M,dt,mass,density,Temp,sigma,eps,nhis,Maxtime,rank) 
+  call input(M,dt,mass,density,Temp,sigma,eps,nhis,Maxtime,rank) 
 !  call MPI_BCAST(M,1,MPI_INTEGER,root,MPI_COMM_WORLD,ierr)
 !  call MPI_BCAST(dt,1,MPI_REAL8,root,MPI_COMM_WORLD,ierr)
 !  call MPI_BCAST(density,1,MPI_REAL8,root,MPI_COMM_WORLD,ierr)
@@ -65,15 +64,15 @@ call MPI_COMM_SIZE(MPI_COMM_WORLD,size,ierr)
 
 !call MPI_BARRIER(MPI_COMM_WORLD,ierr)
 
-M=3
-dt=0.0003
-density=0.9
-Temp=10
-sigma=3.4d-10
-eps=0.9d3
-nhis=1000
-Maxtime=1
-mass=40
+!M=3
+!dt=0.0003
+!density=0.9
+!Temp=10
+!sigma=3.4d-10
+!eps=0.9d3
+!nhis=1000
+!Maxtime=1
+!mass=40
 
 
 !### With the M given, calculate the total number of particles ###!
@@ -124,25 +123,29 @@ allocate(r(N,3),vel(N,3),force(N,3),g(nhis))
 
 !### System initialization ###!
 
-call MPI_BARRIER(MPI_COMM_WORLD,ierr)
+!call MPI_BARRIER(MPI_COMM_WORLD,ierr)
 
 !Generate FCC lattice
 call coordenadas(N,M,r,density,L)
 
-call MPI_BARRIER(MPI_COMM_WORLD,ierr)
+!call MPI_BARRIER(MPI_COMM_WORLD,ierr)
 
 !Adjust lattice with PBC
-call boundary_conditions(r,N,L)
-call MPI_BARRIER(MPI_COMM_WORLD,ierr)
+!call boundary_conditions(r,N,L)
+call boundary_conditions_mpi(r,N,L,part1,part2,root,&
+rank,nini,resizedtype,size)
+
+print*,"task",rank,r(1,1),r(1,2),r(1,3)
+!call MPI_BARRIER(MPI_COMM_WORLD,ierr)
 
 !Assing initial velocities consistent with temperature
-call in_velocity(vel,N,Temp,part1,part2,nini,nfin,nini_first,nfin_first,&
-root,rank)
+call in_velocity_mpi(vel,N,Temp,part1,part2,nini,nfin,&
+root,rank,resizedtype)
 
-call MPI_BARRIER(MPI_COMM_WORLD,ierr)
+!call MPI_BARRIER(MPI_COMM_WORLD,ierr)
 
 !Initialize RDF
-call rdf(r,N,L,0,nhis,density,delg,ngr,g)
+!call rdf(r,N,L,0,nhis,density,delg,ngr,g)
 
 !Cut-off calculation according to box width
 cut=L*0.5d0
@@ -155,13 +158,15 @@ counter=0
 call forces_LJ(L,N,r,cut,force,press,upot)
 
 !### Main Molecular Dynamics loop ###!
-call MPI_BARRIER(MPI_COMM_WORLD,ierr)
+!call MPI_BARRIER(MPI_COMM_WORLD,ierr)
 do while (time.lt.Maxtime)
     time=time+dt
     counter=counter+1
     !New positions and velocities
-    call verlet_velocity(N,cut,press,r,vel,force,dt,upot,L)
-    call MPI_BARRIER(MPI_COMM_WORLD,ierr)
+!    call verlet_velocity(N,cut,press,r,vel,force,dt,upot,L)
+     call verlet_mpi(N,cut,press,r,vel,force,dt,upot,L,root,rank,part1,part2,&
+nini,size,resizedtype)
+ !   call MPI_BARRIER(MPI_COMM_WORLD,ierr)
 !    if (time.gt.0.4*Maxtime)then !After it equilibrates measure the properties
 
         !Kinetical energy calculation
@@ -171,7 +176,7 @@ root,rank)
         !Instant temperature calculation
         call temperatura(kin,N,Temp)
 
-        call MPI_BARRIER(MPI_COMM_WORLD,ierr)
+!        call MPI_BARRIER(MPI_COMM_WORLD,ierr)
         !if (rank.eq.root)then
             !Print magnitudes
         call units_print(time,upot,kin,press,L,dt,sigma,eps,density,Temp,mass,rank)
@@ -181,15 +186,15 @@ root,rank)
         !end if
 
         !Update RDF
-        call rdf(r,N,L,1,nhis,density,delg,ngr,g)
+!        call rdf(r,N,L,1,nhis,density,delg,ngr,g)
         !Print total momentum
-        call momentum(time,vel,N)
+!        call momentum(time,vel,N)
 
  !   end if
 end do
 
 !Final RDF calculation
-call rdf(r,N,L,2,nhis,density,delg,ngr,g)
+!call rdf(r,N,L,2,nhis,density,delg,ngr,g)
 
 
 

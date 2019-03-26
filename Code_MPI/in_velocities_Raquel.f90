@@ -39,7 +39,6 @@ do i=1,N
 enddo
 
 
-vel=0
 !Kinetic energy calculation
 call kinetic_en(vel,N,kin,part1,part2,nini,nfin,nini_first,nfin_first,&
 root,rank)
@@ -48,5 +47,4 @@ root,rank)
 vel=vel*sqrt(N*3d0*Temp/(2d0*kin))
 
 
-vel=0
 end subroutine in_velocity
