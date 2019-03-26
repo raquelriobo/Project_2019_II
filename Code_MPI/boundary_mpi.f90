@@ -29,12 +29,15 @@ do i=1,part2
 end do
 end if
 
+call MPI_Barrier(MPI_COMM_WORLD,ierr)
+
 if(rank.ne.0) then
   rpart1 = rpart1-nint(rpart1/L)*L
 else
   rpart2 = rpart2-nint(rpart2/L)*L
 end if
 
+call MPI_Barrier(MPI_COMM_WORLD,ierr)
 call MPI_Gather(rpart1,numpart,MPI_REAL8,r_aux,1,resizedtype,root,MPI_COMM_WORLD,ierr)
 
 if(rank.eq.0) then
@@ -46,5 +49,6 @@ do i=1,n_part-part2
 end do
 end if
 
+call MPI_Barrier(MPI_COMM_WORLD,ierr)
 call MPI_Bcast(r,n_part,MPI_REAL8,root,MPI_COMM_WORLD,ierr)
 end subroutine boundary_conditions

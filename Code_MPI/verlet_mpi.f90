@@ -4,7 +4,7 @@ nini,size,resizedtype)
 implicit none
 include 'mpif.h'
 integer, intent(in) :: N                       ! Number of part1icles
-integer, intent(in) :: part1,part2                 !Number of particles bloc1, bloc2
+integer, intent(in) :: part1,part2             ! Number of particles bloc1, bloc2
 integer, intent(in) :: size
 integer, intent(in) :: resizedtype
 real*8, intent(in) :: cut_off                      
@@ -47,8 +47,7 @@ do i=1,part2
 end do
 end if
 
-call MPI_BARRIER(MPI_COMM_WORLD, ierr)
-
+call MPI_Barrier(MPI_COMM_WORLD,ierr)
 numpart=part1*3
 call MPI_Gather(rnew_part1,numpart,MPI_REAL8,rnew_part1_aux,1, &
                 resizedtype,root,MPI_COMM_WORLD,ierr)
@@ -80,6 +79,7 @@ do i=1,part2
 end do
 end if
 
+call MPI_Barrier(MPI_COMM_WORLD,ierr)
 call MPI_Gather(vnew_part1,numpart,MPI_REAL8,vnew_part1_aux,1,&
                 resizedtype,root,MPI_COMM_WORLD,ierr)
 
@@ -91,15 +91,14 @@ if(rank==root) then
       vnew(i+part2,:) = vnew_part1_aux(part1+i,:)
     end do
 end if 
-                
+
 ! ### Update #### ! 
 if(rank==0) then
   r = rnew ;    v = vnew ;    F = Fnew ;
-  call boundary_conditions(r,N,L,part1,part2,root,rank,nini,resizedtype,size) 
 end if
 
 call MPI_Bcast(r,N,MPI_REAL8,root,MPI_COMM_WORLD,ierr)
 call MPI_Bcast(v,N,MPI_REAL8,root,MPI_COMM_WORLD,ierr)
 call MPI_Bcast(F,N,MPI_REAL8,root,MPI_COMM_WORLD,ierr)
-
+call boundary_conditions(r,N,L,part1,part2,root,rank,nini,resizedtype,size)
 end subroutine verlet_mpi
