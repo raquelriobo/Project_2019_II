@@ -1,0 +1,15 @@
+  M, time step, mass, Temperature, pressure, sigma, eps, g(r) steps, final simulation time
+
+  3, 0.0003d0, 4.0d0, 300, 1, 2.963d-10, 91.04d0, 1000, 5
+
+  # M: number of particles per dimension in FCC lattice
+  # time step: time increment in each step (reduced)
+  # mass: atomic mass (g/mol)
+  # Temperature: initial temperature (K)
+  # pressure: initial pressure (atm)
+  # sigma: Lenard Jones potential parameter for He (m) 
+  # eps: Lenard Jones potential parameter for He (J/mol)
+  # g(r) steps: number of steps to compute g(r)
+  # final simulation time: maximum time of the simulation (reduced)
+
+LJ parameters eps and sigma from: Aziz, R. A., McCourt, F. R. W. & Wong, C. C. K. Molecular Physics 61, 1487–1511 (1987).
