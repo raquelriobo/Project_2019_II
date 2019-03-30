@@ -1,6 +1,7 @@
 subroutine moment_mpi(time, vel, N, part1, part2, nini, &
 root, rank)
 implicit none
+include 'mpif.h'
 real*8 :: vel(N,3)
 real*8 :: time, px, py, pz, px_aux, py_aux, pz_aux
 integer :: ierr, rank, root, nini

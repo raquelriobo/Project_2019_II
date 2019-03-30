@@ -48,6 +48,7 @@ if (rank==root)then
  do i=1,N-part2
     vel_end(i+part2,:)=veltot(part1+i,:)
  end do
+
 ! ### Total velocity = 0 ### !!!!
 suma=0d0
 do i=1,3

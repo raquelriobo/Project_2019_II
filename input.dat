@@ -1,6 +1,6 @@
   M, time step, mass, Temperature, pressure, sigma, eps, g(r) steps, final simulation time
 
-  3, 0.0003d0, 4.0d0, 300, 1, 2.963d-10, 91.04d0, 1000, 5
+  3, 0.0003d0, 4.0d0, 300, 1, 2.963d-10, 91.04d0, 1000, 10
 
   # M: number of particles per dimension in FCC lattice
   # time step: time increment in each step (reduced)
