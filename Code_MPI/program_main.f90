@@ -71,9 +71,9 @@ N=M**(3)*4
 !### Division of particles among processors ###!
 
 if (size.gt.N) then
-    write(6,*) "The number of workers cannot be higher than the number
-    of particles"
-    call MPI_FINALIZE(ierr)
+    write(6,*) "The number of workers cannot be higher than the number of particles"
+    call MPI_ABORT(ierr)
+    stop
 end if
 
 
