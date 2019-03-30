@@ -1,6 +1,6 @@
 ! ### INTEGRATION : VERLET VELOCITY #### !
 subroutine verlet_mpi(N,cut_off,press,r,v,F,dt,E_pot,L,root,rank,part1,part2,&
-nini,size,resizedtype,nlist,list)
+nini,size,resizedtype,nlist,list,counter,forces_start,forces_finish)
 implicit none
 include 'mpif.h'
 integer, intent(in) :: N                       ! Number of part1icles
@@ -28,6 +28,8 @@ integer             :: ierr,rank,root
 integer             :: nini
 integer             :: numpart
 integer             :: nlist(N),list(N,N-1)
+integer             :: counter
+real*8              :: forces_start(150000),forces_finish(150000)
 
 ! ### Compute new positions with verlet velocity algorithm ### !
 if(rank.ne.0) then
@@ -48,7 +50,6 @@ do i=1,part2
 end do
 end if
 
-!call MPI_Barrier(MPI_COMM_WORLD,ierr)
 numpart=part1*3
 call MPI_Gather(rnew_part1,numpart,MPI_REAL8,rnew_part1_aux,1, &
                 resizedtype,root,MPI_COMM_WORLD,ierr)
@@ -64,14 +65,15 @@ end if
 
 CALL MPI_Bcast(rnew,N*3,MPI_REAL8,root,MPI_COMM_WORLD,ierr)
 
-!print*,"task",rank,rnew(1,:)
 
 ! ### Compute new forces ###!
-!CALL forces_LJ(L,N,rnew,cut_off,Fnew,press,E_pot)
+
+call cpu_time(forces_start(counter))
+
 call forces_vlist(L,N,rnew,cut_off,Fnew,press,E_pot,nlist,list,rank,root,&
 part1,part2,nini,size,resizedtype)
 
-!call MPI_Barrier(MPI_COMM_WORLD,ierr)
+call cpu_time(forces_finish(counter))
 
 ! ### Compute new velocity ### !
 if(rank.ne.0) then
@@ -86,7 +88,6 @@ do i=1,part2
 end do
 end if
 
-!call MPI_Barrier(MPI_COMM_WORLD,ierr)
 call MPI_Gather(vnew_part1,numpart,MPI_REAL8,vnew_part1_aux,1,&
                 resizedtype,root,MPI_COMM_WORLD,ierr)
 

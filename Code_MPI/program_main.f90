@@ -9,14 +9,13 @@ integer :: M              !Number of particles per dimension in FCC lattice
 integer :: N              !Total number of particles
 integer :: nhis,ngr       !RDF subroutine counters
 integer :: i,counter
-integer, allocatable :: nlist(:),list(:,:)
+
 real*8  :: upot           !Potential Energy (reduced units)
 real*8  :: time           !Time (reduced units)
 real*8  :: density        !Density of the lattice, reduced units
 real*8  :: cut            !LJ forces calculation distance cut-off
 real*8  :: cut2
 real*8  :: resta
-!real*8  :: start, finish
 real*8  :: L              !Simulation box width
 real*8  :: dt             !Time step for integration (reduced units)
 real*8  :: Temp           !Simulation temperature (reduced units)
@@ -34,6 +33,7 @@ real*8,allocatable :: vel(:,:)    !Matrix with the velocities of all particles a
                                   !(Reduced units)
 real*8,allocatable :: force(:,:)  !Matrix with forces at a given step (Reduced units)
 real*8,allocatable :: g(:)        !Radial Distribution function
+integer, allocatable :: nlist(:),list(:,:) !Vector of Verlet list longitudes, and Verlet lists matrix 
 
 integer :: ierr
 integer :: rank                     !Task name
@@ -47,12 +47,18 @@ integer :: blocktype,resizedtype
 integer :: intsize,N_aux
 integer (kind=MPI_Address_kind) :: start, extent
 logical :: check
+real*8 :: forces_start(150000),forces_finish(150000),total_forces_time(150000)
+real*8 :: start_time,finish_time,vlist_start,vlist_finish
+
 
 root=0
 call MPI_INIT(ierr)
 call MPI_COMM_RANK(MPI_COMM_WORLD,rank,ierr)
 call MPI_COMM_SIZE(MPI_COMM_WORLD,size,ierr)
 
+!Measure time for the entire run
+
+call cpu_time(start_time)
 
 !### Read input parameters from input.dat ###!
 
@@ -63,6 +69,13 @@ call input(M,dt,mass,density,Temp,sigma,eps,nhis,Maxtime,rank)
 N=M**(3)*4
 
 !### Division of particles among processors ###!
+
+if (size.gt.N) then
+    write(6,*) "The number of workers cannot be higher than the number
+    of particles"
+    call MPI_FINALIZE(ierr)
+end if
+
 
 if (mod(N,size).eq.0)then
   part1=N/(size)
@@ -100,10 +113,12 @@ call MPI_Type_commit(resizedtype, ierr)
 
 call MPI_BARRIER(MPI_COMM_WORLD,ierr)
 
+
 !### Allocate matrixes and vectors ###!
 
 allocate(r(N,3),vel(N,3),force(N,3),g(nhis),rold(N,3))
 allocate(nlist(N),list(N,N-1))
+
 
 !### System initialization ###!
 
@@ -119,22 +134,26 @@ rank,nini,resizedtype,size)
 
 !Assing initial velocities consistent with temperature
 call in_velocity_mpi(vel,N,Temp,part1,part2,nini,nfin,&
-root,rank,resizedtype)
+root,rank,resizedtype,size)
 
 !Initialize RDF
 call rdf_mpi(r,N,L,0,nhis,density,delg,ngr,g,rank,root,nini,part1,part2,nlist,list)
 
 !Cut-off calculation according to box width
-cut=L*0.4d0
-cut2=L*0.5d0
-print*,L
+cut=L*0.4d0   !Lennard-Jones cut-off
+cut2=L*0.5d0  !Verlet list cut-off
+
 !Time initialization
 time=0.d0
 counter=0
 check=.false.
 
-!call new_vlist(i,L,N,r,cut2,nlist,list,rold,root,rank,part1,part2,nini,size)
+call cpu_time(vlist_start)
+
+!Calculate initial Verlet lists
 call vlist(i,L,N,r,cut2,nlist,list,rold)
+
+call cpu_time(vlist_finish)
 
 !Calculate initial forces,energies,pressure
 call forces_vlist(L,N,r,cut,force,press,upot,nlist,list,rank,root,part1,part2,nini,size&
@@ -147,12 +166,14 @@ do while (time.lt.Maxtime)
 
     !New positions and velocities
     call verlet_mpi(N,cut,press,r,vel,force,dt,upot,L,root,rank,part1,part2,&
-    nini,size,resizedtype,nlist,list)
+    nini,size,resizedtype,nlist,list,counter,forces_start,forces_finish)
     
     call MPI_BARRIER(MPI_COMM_WORLD,ierr)   
 
     !Print positions
-    call trajectory(r,N,time,counter,rank)
+    if (mod(counter,100).eq.0) then
+        call trajectory(r,N,time,counter,rank)
+    end if
 
     if ((mod(counter,500).eq.0).and.rank.eq.root) then
         call checkvlist(i,L,N,r,cut,cut2,nlist,list,rold,counter,check)
@@ -167,7 +188,7 @@ do while (time.lt.Maxtime)
 
         !Kinetical energy calculation
         call kinetic_en(vel,N,kin,part1,part2,nini,nfin,nini_first,nfin_first,&
-root,rank)
+        root,rank)
 
         !Instant temperature calculation
         call temperatura(kin,N,Temp)
@@ -178,26 +199,34 @@ root,rank)
 
         !Print magnitudes
         call units_print(time,upot,kin,press,L,dt,sigma,eps,density,Temp,mass,rank)
-        
+
 
     if (time.gt.0.4*Maxtime)then !After it equilibrates measure RDF
 
         !Update RDF
-        call rdf_mpi(r,N,L,1,nhis,density,delg,ngr,g,rank,root,nini,part1,part2,nlist,list)
+        if (mod(counter,100).eq.0) then
+            call rdf_mpi(r,N,L,1,nhis,density,delg,ngr,g,rank,root,nini,part1,part2,nlist,list)
+        end if
 
     end if
 end do
 
-!Closing output files
-close(24)
-close(25)
-close(26)
-close(27)
-close(28)
-
 !Final RDF calculation
 
 call rdf_mpi(r,N,L,2,nhis,density,delg,ngr,g,rank,root,nini,part1,part2,nlist,list)
+
+!Measure the time of the entire run
+call cpu_time(finish_time)
+
+!Time results:
+
+if (rank.eq.root) then
+    write(6,*) "Total time:",finish_time-start_time, "seconds."
+    write(6,*) "Total Verlet list time:", vlist_finish-vlist_start,"seconds."
+    total_forces_time=forces_finish-forces_start
+    write(6,*) "Total Force time (all iterations):",sum(total_forces_time),"seconds."
+    write(6,*) "Average force time per iteration:",sum(total_forces_time)/counter,"seconds." 
+end if
 
 
 call MPI_FINALIZE(ierr)

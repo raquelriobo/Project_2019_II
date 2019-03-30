@@ -1,14 +1,15 @@
 subroutine in_velocity_mpi(vel,N,Temp,part1,part2,nini,nfin,&
-root,rank,resizedtype)
+root,rank,resizedtype,size)
 implicit none
 include 'mpif.h'
-real*8 :: vel(N,3),vel_final(N,3)
-real*8 :: veltot(N,3), vel_end(N,3)
+integer :: size
+integer :: part1,part2
+real*8 :: vel(N,3),vel_final(part1*size,3)
+real*8 :: veltot(part1*size,3), vel_end(N,3)
 integer :: N,i,nini,nfin,j
 integer :: nini_first, nfin_first
 real*8 :: kin, r1
 integer :: ierr,rank,root
-integer :: part1, part2
 real*8  :: vpart1(part1,3),vpart2(part2,3)
 integer :: resizedtype
 real*8 :: suma(3), Temp

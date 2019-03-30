@@ -37,9 +37,5 @@ do i=1,N
     end do
 end do
 
-!do i=1,nlist(105)
-!  print*,list(105,i)
-!end do
-
 
 end subroutine vlist

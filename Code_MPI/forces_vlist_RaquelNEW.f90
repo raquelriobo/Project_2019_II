@@ -29,19 +29,6 @@ fpart1=0
 fpart2=0
 f_aux=0
 
-!### Partial matrixes ###!
-!if (rank.ne.root) then
-!    do i=1,part1
-!        fpart1(i,:)=force(nini+i,:)
-!        print*,fpart1(i,:)
-!    end do
-!else
-!    do i=1,part2
-!        fpart2(i,:)=force(i,:)
-!    end do
-!end if
-    
-
 
 if (rank.ne.root) then
     do i=nini+1,nini+part1
