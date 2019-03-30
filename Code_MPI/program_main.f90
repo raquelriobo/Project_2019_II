@@ -178,7 +178,7 @@ root,rank)
 
         !Print magnitudes
         call units_print(time,upot,kin,press,L,dt,sigma,eps,density,Temp,mass,rank)
-
+        
 
     if (time.gt.0.4*Maxtime)then !After it equilibrates measure RDF
 
@@ -187,6 +187,13 @@ root,rank)
 
     end if
 end do
+
+!Closing output files
+close(24)
+close(25)
+close(26)
+close(27)
+close(28)
 
 !Final RDF calculation
 
