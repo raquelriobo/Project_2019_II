@@ -13,8 +13,9 @@ real(8), parameter  :: kb = 1.38064852d-23
 integer :: rank
 
 if (rank.eq.0) then
-open(unit=24, file="Results.txt")
-
+open(unit=24, file="E_kinpot.txt")
+open(unit=25, file="E_tot.txt")
+open(unit=26, file="PressTemp.txt")
 
 ekin=kinetic_E*epsil*1d-3               ! Kinetic Energy
 epot=potential_E*epsil*1d-3             ! Potential Energy
@@ -29,7 +30,8 @@ time2=time2*(1d-12)                     ! Time in picoseconds
 Temp2=(Temp*epsil)/(kb*Avognum)         ! Temperature
 
 ! Print the results !
-write(24,*) time2, epot, ekin, (epot+ekin), pressure2, Temp2
-! time, Potential Energy, Kinetic Energy, Total Energy, Pressure and Temperature !
+write(24,*) time2, epot, ekin
+write(25,*) time2, (epot+ekin)
+write(26,*) time2, pressure2, Temp2
 end if
 end subroutine units_print

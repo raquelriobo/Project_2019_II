@@ -6,7 +6,7 @@ real*8 :: vel(N,3)
 real*8 :: time, px, py, pz, px_aux, py_aux, pz_aux
 integer :: ierr, rank, root, nini
 integer :: N,i,part1,part2
-open(unit=25, file="Momentum.txt")
+
 px_aux=0
 py_aux=0
 pz_aux=0
@@ -35,7 +35,11 @@ call MPI_REDUCE(py_aux,py,1,MPI_REAL8,MPI_SUM,root,MPI_COMM_WORLD,ierr)
 call MPI_REDUCE(pz_aux,pz,1,MPI_REAL8,MPI_SUM,root,MPI_COMM_WORLD,ierr)
 
 if (rank==root)then
-write(25,*) time,px,py,pz
+open(unit=27, file="Momentum_xy.txt")
+open(unit=28, file="Momentum_z.txt")
+
+write(27,*) time,px,py
+write(28,*) time,pz
 end if
 
 end subroutine moment_mpi
