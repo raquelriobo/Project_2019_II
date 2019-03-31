@@ -4,8 +4,8 @@ root,rank,resizedtype,size)
 implicit none
 include 'mpif.h'
 integer :: size
-integer :: part1                    ! Number of particles send to procesor
-integer :: part2                    ! Number of particles send to root
+integer :: part1                    ! Number of particles to send to procesor
+integer :: part2                    ! Number of particles to send to root
 real(8) :: vel(N,3)                 ! Velocity Matrix
 real(8) :: vel_final(part1*size,3)  ! Final Velocity Matrix 
 real(8) :: veltot(part1*size,3)     ! Velocity Matrix output first gatherMPI
