@@ -68,12 +68,12 @@ CALL MPI_Bcast(rnew,N*3,MPI_REAL8,root,MPI_COMM_WORLD,ierr)
 
 ! ### Compute new forces ###!
 
-call cpu_time(forces_start(counter))
+!call cpu_time(forces_start(counter))
 
 call forces_vlist(L,N,rnew,cut_off,Fnew,press,E_pot,nlist,list,rank,root,&
 part1,part2,nini,size,resizedtype)
 
-call cpu_time(forces_finish(counter))
+!call cpu_time(forces_finish(counter))
 
 ! ### Compute new velocity ### !
 if(rank.ne.0) then

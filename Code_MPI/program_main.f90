@@ -58,7 +58,7 @@ call MPI_COMM_SIZE(MPI_COMM_WORLD,size,ierr)
 
 !Measure time for the entire run
 
-call cpu_time(start_time)
+!call cpu_time(start_time)
 
 !### Read input parameters from input.dat ###!
 
@@ -148,12 +148,12 @@ time=0.d0
 counter=0
 check=.false.
 
-call cpu_time(vlist_start)
+!call cpu_time(vlist_start)
 
 !Calculate initial Verlet lists
 call vlist(i,L,N,r,cut2,nlist,list,rold)
 
-call cpu_time(vlist_finish)
+!call cpu_time(vlist_finish)
 
 !Calculate initial forces,energies,pressure
 call forces_vlist(L,N,r,cut,force,press,upot,nlist,list,rank,root,part1,part2,nini,size&
@@ -216,22 +216,22 @@ end do
 call rdf_mpi(r,N,L,2,nhis,density,delg,ngr,g,rank,root,nini,part1,part2,nlist,list)
 
 !Measure the time of the entire run
-call cpu_time(finish_time)
+!call cpu_time(finish_time)
 
 !Time results:
 
-if (rank.eq.root) then
+!if (rank.eq.root) then
     !write(6,*) "Total time:",finish_time-start_time, "seconds."
     !write(6,*) finish_time-start_time
     !write(6,*) "Total Verlet list time:", vlist_finish-vlist_start,"seconds."
     !write(6,*) vlist_finish-vlist_start
-    total_forces_time=forces_finish-forces_start
+!    total_forces_time=forces_finish-forces_start
     !write(6,*) "Total Force time (all iterations):",sum(total_forces_time),"seconds."
     !write(6,*) sum(total_forces_time)
     !write(6,*) "Average force time per iteration:",sum(total_forces_time)/counter,"seconds." 
     !write(6,*) sum(total_forces_time)/counter
-     write(6,*) finish_time-start_time,vlist_finish-vlist_start,sum(total_forces_time),sum(total_forces_time)/counter
-end if
+!     write(6,*) finish_time-start_time,vlist_finish-vlist_start,sum(total_forces_time),sum(total_forces_time)/counter
+!end if
 
 
 call MPI_FINALIZE(ierr)
