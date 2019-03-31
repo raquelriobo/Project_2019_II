@@ -1,4 +1,4 @@
-!##################################################!
+!#################################################!
 !### Main Molecular Dynamics simulation program ###!
 !##################################################!
 
@@ -221,11 +221,16 @@ call cpu_time(finish_time)
 !Time results:
 
 if (rank.eq.root) then
-    write(6,*) "Total time:",finish_time-start_time, "seconds."
-    write(6,*) "Total Verlet list time:", vlist_finish-vlist_start,"seconds."
+    !write(6,*) "Total time:",finish_time-start_time, "seconds."
+    !write(6,*) finish_time-start_time
+    !write(6,*) "Total Verlet list time:", vlist_finish-vlist_start,"seconds."
+    !write(6,*) vlist_finish-vlist_start
     total_forces_time=forces_finish-forces_start
-    write(6,*) "Total Force time (all iterations):",sum(total_forces_time),"seconds."
-    write(6,*) "Average force time per iteration:",sum(total_forces_time)/counter,"seconds." 
+    !write(6,*) "Total Force time (all iterations):",sum(total_forces_time),"seconds."
+    !write(6,*) sum(total_forces_time)
+    !write(6,*) "Average force time per iteration:",sum(total_forces_time)/counter,"seconds." 
+    !write(6,*) sum(total_forces_time)/counter
+     write(6,*) finish_time-start_time,vlist_finish-vlist_start,sum(total_forces_time),sum(total_forces_time)/counter
 end if
 
 

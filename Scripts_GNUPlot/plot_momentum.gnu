@@ -4,6 +4,6 @@ set xlabel 'Time (reduced units)'
 set ylabel 'Momentum (reduced units)'
 set title 'Total momentum vs time'
 set key out
-plot 'Momentum_xy.txt' u 1:2 t 'Px' w l lc rgb 'pink',\
+plot 'Momentum.txt' u 1:2 t 'Px' w l lc rgb 'pink',\
       '' u 1:3 t 'Py' w l lc rgb 'skyblue',\
-      'Momentum_z.txt' u 1:2 t 'Pz' w l lc rgb 'orange'
+      '' u 1:4 t 'Pz' w l lc rgb 'orange'
